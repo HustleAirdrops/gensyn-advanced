@@ -61,7 +61,7 @@ async def main():
             try:
                 print("🕵️ Waiting for login success confirmation...")
                 await page.wait_for_selector("text=/successfully logged in/i", timeout=60000)
-                print("✅ Login confirmed!")")
+                print("✅ Login confirmed!")
             except Exception:
                 print("❌ Login message not found. Capturing fallback state...")
                 html = await page.content()
