@@ -55,8 +55,6 @@ async def main():
             print("⌨️ Typing OTP...")
             await page.keyboard.type(otp, delay=100)
 
-            await page.screenshot(path="/root/after_otp_fill.png", full_page=True)
-
             await page.keyboard.press("Enter")  # Optional; many forms auto-submit
 
             # Wait for success confirmation
