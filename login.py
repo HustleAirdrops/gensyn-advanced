@@ -30,15 +30,9 @@ async def main():
             print("🖱 Clicking 'Login' button...")
             await page.get_by_role("button", name="Login").click()
 
-            await page.screenshot(path="/root/after_login_click.png", full_page=True)
-            print("📸 Saved: /root/after_login_click.png")
-
             email_input = await page.wait_for_selector("input[type=email]", timeout=30000)
             email = input("📨 Enter your email for GENSYN: ").strip()
             await email_input.fill(email)
-
-            await page.screenshot(path="/root/after_email_fill.png", full_page=True)
-            print("📸 Saved: /root/after_email_fill.png")
 
             continue_button = await page.wait_for_selector("button:has-text('Continue')", timeout=10000)
             await continue_button.click()
@@ -46,9 +40,6 @@ async def main():
             print("⌛ Waiting for OTP screen...")
             await page.wait_for_selector("text=Enter verification code", timeout=60000)
             await asyncio.sleep(1)
-
-            await page.screenshot(path="/root/before_otp_fill.png", full_page=True)
-            print("📸 Saved: /root/before_otp_fill.png")
 
             otp = input("🔐 Enter OTP from your email: ").strip()
             if len(otp) != 6:
@@ -65,7 +56,6 @@ async def main():
             await page.keyboard.type(otp, delay=100)
 
             await page.screenshot(path="/root/after_otp_fill.png", full_page=True)
-            print("📸 Saved: /root/after_otp_fill.png")
 
             await page.keyboard.press("Enter")  # Optional; many forms auto-submit
 
@@ -73,18 +63,11 @@ async def main():
             try:
                 print("🕵️ Waiting for login success confirmation...")
                 await page.wait_for_selector("text=/successfully logged in/i", timeout=60000)
-                print("✅ Login confirmed!")
-                await page.screenshot(path="/root/final_logged_in.png", full_page=True)
-                print("📸 Saved: /root/final_logged_in.png")
+                print("✅ Login confirmed!")")
             except Exception:
                 print("❌ Login message not found. Capturing fallback state...")
-                await page.screenshot(path="/root/login_failed.png", full_page=True)
                 html = await page.content()
-                with open("/root/login_failed.html", "w") as f:
-                    f.write(html)
-                print("📸 Saved fallback screenshot: /root/login_failed.png")
-                print("🧾 Saved page HTML: /root/login_failed.html")
-
+        
         except Exception as e:
             print("❌ An error occurred:", str(e))
         finally:
